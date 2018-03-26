@@ -1,0 +1,16 @@
+show databases 展示数据库
+use databse 用那个库
+show tables 展示表
+select * from bian where tiaojiao
+show create database 库 展示库名字字符建立等
+create database 库 创建一个号库
+create database is not exists 库 character set = utf8 设置字符
+alter  可以修改数据库的定义 例如 ALTER DATABASE shiyanlou001 character set = utf8 这样可以更改数据库的设定
+ drop 可以做删除处理 DROP DATABASE IF EXISTS shiyanlou001 这样可以删除shiyanlou001
+select * from mysql.user 这样可以直接查找库中的表，不用use 到库
+create tables test1(field1 char(5),field2 varchar(5),fields text） 这里创建了一个表 并且做了规定
+insert into test1 values("12","213","43") 这里向刚刚创建的表 test1 插入一条数据
+ enum 枚举 set 集合 几乎都是定义在这里面取值，比如
+create tables test2（field1 enum("a","b","c"),field2 set("1","2","3")）
+在插入的时候 inesrt into test2 values("11","55");就不会显示，但是如果insert into test2 values（"a","1"）;就可以，这就是在里面取值。
+decimal(a,b) 这个词的英文翻译是十进制，a代表这个数字的总长度，b代表小数点后几位
