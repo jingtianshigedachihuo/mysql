@@ -40,4 +40,4 @@ select * from where（select ---）
 外联结有两种，左右 left join 。。on （左） right join .. on （右） 以左侧或右侧为准。
 using 用于指定列，多个表之间都存在额。
 视图不看
-
+修改列的类型 alter table hh modify column name varchar（）
