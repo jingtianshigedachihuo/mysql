@@ -14,3 +14,30 @@ insert into test1 values("12","213","43") 这里向刚刚创建的表 test1 插�
 create tables test2（field1 enum("a","b","c"),field2 set("1","2","3")）
 在插入的时候 inesrt into test2 values("11","55");就不会显示，但是如果insert into test2 values（"a","1"）;就可以，这就是在里面取值。
 decimal(a,b) 这个词的英文翻译是十进制，a代表这个数字的总长度，b代表小数点后几位
+desc 一般指出表或视图的所有列
+一些约束条件：主键 primary key
+             外键 foreign key
+             默认 default
+             唯一 unique
+             非空 not null
+update tbl——name  update student set name="shiyanlou";修改所有name 也可以用where 限定条件
+delete from tbl_name where id=4; 删除id=4；
+ALTER TABLE tablename ADD 列名；
+concat 是一个字符串函数，可以进行字段的拼接操作。select concat（“道德”，“模范”）；
+group by 分组。 order by 按顺序排序。
+sum 总数
+avg 平均数
+where 和 having 都可以按条件查找。但是各有不同，where 主要是按行查找，having 可以引用函数查找。比如：sum avg 等等。
+desc asc 正旭倒叙
+limit 可以对返回的结果集进行限制。
+子查询又成为嵌套查询
+select * from where（select ---）
+第一步的查询嵌入到第二步查询中。
+数据表的联结很关键，联结基于关系表，可以用来关联多个表，因此连结。
+还有内联结
+可以用规定的标准语句 join on
+不使用相关条件的内连结结果为两个集合的笛卡儿积。 inner  join 。
+外联结有两种，左右 left join 。。on （左） right join .. on （右） 以左侧或右侧为准。
+using 用于指定列，多个表之间都存在额。
+视图不看
+
