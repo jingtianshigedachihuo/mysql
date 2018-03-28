@@ -4,6 +4,8 @@ show tables 展示表
 select * from bian where tiaojiao
 show create database 库 展示库名字字符建立等
 create database 库 创建一个号库
+create user 'hh'@'host' identified by 'password'; 新建用户。
+grant 权限， on 库.表 to user@‘%’
 create database is not exists 库 character set = utf8 设置字符
 alter  可以修改数据库的定义 例如 ALTER DATABASE shiyanlou001 character set = utf8 这样可以更改数据库的设定
  drop 可以做删除处理 DROP DATABASE IF EXISTS shiyanlou001 这样可以删除shiyanlou001
@@ -41,3 +43,60 @@ select * from where（select ---）
 using 用于指定列，多个表之间都存在额。
 视图不看
 修改列的类型 alter table hh modify column name varchar（）
+mysql 会有各种各样的储存引擎，
+MyISam 不能处理事务和支持外键
+MySQL常用的四种引擎的介绍
+
+（1）：MyISAM存储引擎：不支持事务、也不支持外键，优势是访问速度快，对事务完整性没有 要求或者以select，insert为主的应用基本上可以用这个引擎来创建表
+
+支持3种不同的存储格式，分别是：静态表；动态表；压缩表
+
+静态表：表中的字段都是非变长字段，这样每个记录都是固定长度的，优点存储非常迅速，容易缓存，出现故障容易恢复；缺点是占用的空间通常比动态表多（因为存储时会按照列的宽度定义补足空格）ps：在取数据的时候，默认会把字段后面的空格去掉，如果不注意会把数据本身带的空格也会忽略。
+
+动态表：记录不是固定长度的，这样存储的优点是占用的空间相对较少；缺点：频繁的更新、删除数据容易产生碎片，需要定期执行OPTIMIZE TABLE或者myisamchk-r命令来改善性能
+
+压缩表：因为每个记录是被单独压缩的，所以只有非常小的访问开支
+
+（2）InnoDB存储引擎*
+
+该存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。但是对比MyISAM引擎，写的处理效率会差一些，并且会占用更多的磁盘空间以保留数据和索引。 
+InnoDB存储引擎的特点：支持自动增长列，支持外键约束
+
+(3)：MEMORY存储引擎
+
+Memory存储引擎使用存在于内存中的内容来创建表。每个memory表只实际对应一个磁盘文件，格式是.frm。memory类型的表访问非常的快，因为它的数据是放在内存中的，并且默认使用HASH索引，但是一旦服务关闭，表中的数据就会丢失掉。 
+MEMORY存储引擎的表可以选择使用BTREE索引或者HASH索引，两种不同类型的索引有其不同的使用范围
+
+Hash索引优点： 
+Hash 索引结构的特殊性，其检索效率非常高，索引的检索可以一次定位，不像B-Tree 索引需要从根节点到枝节点，最后才能访问到页节点这样多次的IO访问，所以 Hash 索引的查询效率要远高于 B-Tree 索引。 
+Hash索引缺点： 那么不精确查找呢，也很明显，因为hash算法是基于等值计算的，所以对于“like”等范围查找hash索引无效，不支持；
+
+Memory类型的存储引擎主要用于哪些内容变化不频繁的代码表，或者作为统计操作的中间结果表，便于高效地对中间结果进行分析并得到最终的统计结果，。对存储引擎为memory的表进行更新操作要谨慎，因为数据并没有实际写入到磁盘中，所以一定要对下次重新启动服务后如何获得这些修改后的数据有所考虑。
+
+（4）MERGE存储引擎
+
+Merge存储引擎是一组MyISAM表的组合，这些MyISAM表必须结构完全相同，merge表本身并没有数据，对merge类型的表可以进行查询，更新，删除操作，这些操作实际上是对内部的MyISAM表进行的。
+
+我的目的是切换引擎；从而使表支持外键和事务操作。InnoBD
+alter table 表名 engine=InnoDB；
+当然一个成熟的表贸然去改变，会破坏里面的数据，最好的的办法是导出一个数据，
+a. create table 新表 like 原表 ；然后在 alter table 新表 engine=InnoDB ，改变引擎。
+b， insert into 新表 select * from 原表。  就可以导入原表数据。
+当然这样使用回滚 不是特别安全，可以使用mysql 中的语法
+start transaction 开始事务 
+commit 结束事务
+当然好多操作都是隐式提交的
+所以不要掉以轻心。
+savepoint 用来设置保存点，
+首先，我们用begin 来开启事务。
+savepoint 保存点名字。
+rollback to 保存点名字。
+commit 完成事务。
+flush privileges；刷新权限。
+
+
+
+
+
+
+
