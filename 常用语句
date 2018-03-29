@@ -22,6 +22,8 @@ desc 一般指出表或视图的所有列
              默认 default
              唯一 unique
              非空 not null
+  外键：比如两个表，表A，表b 表A的主关键字有表b的字段，那么表A 是表b外键，表A称为主表，表b称为从表
+  例如：alter table b foreign key (相关联外键名) references A (相关联的外键名)
 update tbl——name  update student set name="shiyanlou";修改所有name 也可以用where 限定条件
 delete from tbl_name where id=4; 删除id=4；
 ALTER TABLE tablename ADD 列名；
