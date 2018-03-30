@@ -17,13 +17,18 @@ create tables test2（field1 enum("a","b","c"),field2 set("1","2","3")）
 在插入的时候 inesrt into test2 values("11","55");就不会显示，但是如果insert into test2 values（"a","1"）;就可以，这就是在里面取值。
 decimal(a,b) 这个词的英文翻译是十进制，a代表这个数字的总长度，b代表小数点后几位
 desc 一般指出表或视图的所有列
-一些约束条件：主键 primary key
-             外键 foreign key
+一些约束条件：1.主键 primary key
+             3.外键 foreign key
              默认 default
-             唯一 unique
+            2. 唯一 unique
              非空 not null
-  外键：比如两个表，表A，表b 表A的主关键字有表b的字段，那么表A 是表b外键，表A称为主表，表b称为从表
-  例如：alter table b foreign key (相关联外键名) references A (相关联的外键名)
+1.1对于多个字段共同构成主键来讲，使用列级完整性约束是不行的，只能使用表级完整性约束。
+例如：create table test1(field1 int,field2 int，constraint 约束名 primary key(field1,field2));
+alter table test1 drop primary key;删除主键， alter table test1 add primary
+key（）；增加主键。
+2.2 唯一键，与主键用法基本相同，unique 可以为空null 不可重复。主要用于连结。
+3.3外键，假设A表B表，A表中含有B表中相同的列，那么A表是B表的外键，A表是主表，B表是从表，不能删除A的唯一数据，但是可以删除B表的。
+ps：alter table B add foreign key 标识（表中要关联的列）references A（要关联的列）
 update tbl——name  update student set name="shiyanlou";修改所有name 也可以用where 限定条件
 delete from tbl_name where id=4; 删除id=4；
 ALTER TABLE tablename ADD 列名；
@@ -57,7 +62,7 @@ MySQL常用的四种引擎的介绍
 
 动态表：记录不是固定长度的，这样存储的优点是占用的空间相对较少；缺点：频繁的更新、删除数据容易产生碎片，需要定期执行OPTIMIZE TABLE或者myisamchk-r命令来改善性能
 
-压缩表：因为每个记录是被单独压缩的，所以只有非常小的访问开支
+压缩表：因为每个记录是被单独压缩的，所以只有非常小的访问开支。
 
 （2）InnoDB存储引擎*
 
@@ -95,7 +100,7 @@ savepoint 保存点名字。
 rollback to 保存点名字。
 commit 完成事务。
 flush privileges；刷新权限。
-
+ 
 
 
 
